@@ -4,10 +4,11 @@ import (
 	"net/http"
 
 	"flag"
+
+	telldusLocal "github.com/MagnusGun/prometheus-tellstick-exporter/telldus_local"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	log "github.com/sirupsen/logrus"
-	telldusLocal "github.com/hoihrig/prometheus-tellstick-exporter/telldus_local"
 )
 
 var (
