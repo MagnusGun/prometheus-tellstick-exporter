@@ -21,7 +21,10 @@ var (
 func main() {
 	flag.Parse()
 
-	host := telldusLocal.TellStickHost{*localtellstickApiUrl, *telldusapiToken}
+	host := telldusLocal.TellStickHost{
+		Address: *localtellstickApiUrl,
+		Token:   *telldusapiToken,
+	}
 
 	telldusLocal.PublishBuildInfo()
 
