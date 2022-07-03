@@ -1,11 +1,10 @@
 package main
 
 import (
-	"net/http"
-
 	"flag"
+	"net/http"
+	telldusLocal "prometheus-tellstick-exporter/telldus_local"
 
-	telldusLocal "github.com/MagnusGun/prometheus-tellstick-exporter/telldus_local"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	log "github.com/sirupsen/logrus"
