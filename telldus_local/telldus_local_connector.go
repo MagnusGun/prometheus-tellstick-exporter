@@ -2,12 +2,13 @@ package telldus_local
 
 import (
 	"encoding/json"
-	"github.com/prometheus/client_golang/prometheus"
-	log "github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
 	"runtime"
 	"strconv"
+
+	"github.com/prometheus/client_golang/prometheus"
+	log "github.com/sirupsen/logrus"
 )
 
 func PublishBuildInfo() {
@@ -71,7 +72,7 @@ func getDeviceCount(host TellStickHost) float64 {
 
 func makeRequest(host TellStickHost, endpoint string) ([]byte, error) {
 	client := &http.Client{}
-	req, err := http.NewRequest("GET", host.Address+"/api/"+endpoint, nil)
+	req, err := http.NewRequest("GET", "http://"+host.Address+"/api/"+endpoint, nil)
 	if err != nil {
 		log.Error("Could not create http request", err)
 	}
@@ -87,45 +88,45 @@ func makeRequest(host TellStickHost, endpoint string) ([]byte, error) {
 	return body, err
 }
 
-func unitLookup(datatype string, scale int) (string) {
+func unitLookup(datatype string, scale int) string {
 	switch datatype {
-		case "temp":
-			if scale == 0 {
-				return "Celsius"
-			}
-			if scale == 1 {
-				return "Fahrenheit"
-			}
-		case "humidity":
+	case "temp":
+		if scale == 0 {
+			return "Celsius"
+		}
+		if scale == 1 {
+			return "Fahrenheit"
+		}
+	case "humidity":
+		return "%"
+	case "watt":
+		if scale == 0 {
+			return "KWh"
+		}
+		if scale == 2 {
+			return "Watt"
+		}
+	case "uv":
+		return "Index"
+	case "lum":
+		if scale == 0 {
 			return "%"
-		case "watt":
-			if scale == 0 {
-				return "KWh"
-			}
-			if scale == 2 {
-				return "Watt"
-			}
-		case "uv":
-			return "Index"
-		case "lum":
-			if scale == 0 {
-				return "%"
-			}
-			if scale == 1 {
-				return "Lux"
-			}
-		case "rrate":
-			return "mm/h"
-		case "rtot":
-			return "mm"
-		case "wgust":
-			return "m/s"
-		case "wdir":
-			return "Direction"
-		case "barpress":
-			return "kPa"
-		default:
-			return ""
+		}
+		if scale == 1 {
+			return "Lux"
+		}
+	case "rrate":
+		return "mm/h"
+	case "rtot":
+		return "mm"
+	case "wgust":
+		return "m/s"
+	case "wdir":
+		return "Direction"
+	case "barpress":
+		return "kPa"
+	default:
+		return ""
 	}
 	return ""
 }
